@@ -43,7 +43,8 @@ def select_data(user_select):
         if conn is not None:
             cur = conn.cursor()
             cur.execute(user_select)
-            print(cur.fetchall())
+            # print(cur.fetchall())
+            return cur.fetchall()
             cur.close()
         else:
             print("Error: can't create the database connection")

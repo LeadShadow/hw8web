@@ -1,7 +1,7 @@
 import random
 from random import randint
 from faker import Faker
-from main import create_connection
+from create_connection import create_connection
 import colorama
 
 fake = Faker()
@@ -11,12 +11,14 @@ groups = ['2КІ-21Б', '1КІ-21Б', '1СП-21Б']
 
 subjects = ['Math', 'Chemistry', 'Physics', 'Geography', 'Biology']
 
+dates = ['2022-02-14 08:15:00', '2022-02-15 10:15:00', '2022-02-16 12:00:00', '2022-02-16 14:00:00', '2022-02-17 10:00:00']
+
 
 insert_into_students = "INSERT INTO students(name) VALUES(%s)"
 insert_into_teachers = "INSERT INTO teachers(name) VALUES(%s)"
 insert_into_subjects = "INSERT INTO subjects(subject) VALUES(%s)"
 insert_into_groups = "INSERT INTO groups(cluster) VALUES(%s)"
-insert_into_grades = "INSERT INTO grades(id, grade, student_id, subject_id) VALUES(%s, %s, %s, %s)"
+insert_into_grades = "INSERT INTO grades(id, grade, student_id, subject_id, date_grade) VALUES(%s, %s, %s, %s, %s)"
 insert_into_group_for_student = "INSERT INTO group_for_student(student_id, group_id) VALUES(%s, %s)"
 insert_into_group_for_teachers = "INSERT INTO teachers_for_sub(teacher_id, subject_id) VALUES(%s, %s)"
 
@@ -47,7 +49,8 @@ def insert_into_tables(user_table, count):
                         count_for_id_teacher = 1
                     else:
                         count_for_id_teacher += 1
-                    cur.execute(user_table, (count_for_id, randint(1, 12), count_for_id, count_for_id_teacher))
+                    cur.execute(user_table, (count_for_id, randint(1, 12), count_for_id, count_for_id_teacher, dates[count_for_id_teacher-1]))
+
             if user_table == insert_into_group_for_student:
                 for i in range(1, count+1):
                     cur.execute(user_table, (i, randint(1, 3)))

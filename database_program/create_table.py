@@ -1,4 +1,4 @@
-from main import create_context_connection
+from create_connection import create_context_connection
 import colorama
 
 
@@ -43,6 +43,7 @@ table_grades = """CREATE TABLE IF NOT EXISTS grades (
     grade INTEGER,
     student_id INTEGER,
     subject_id INTEGER,
+    date_grade TIMESTAMP,
     FOREIGN KEY (student_id) REFERENCES students(id),
     FOREIGN KEY (subject_id) REFERENCES subjects(id)
 )"""

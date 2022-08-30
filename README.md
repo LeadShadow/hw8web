@@ -49,12 +49,98 @@ Our tasks:
 
 <p align="center">2</p>
 
-    adwa
+    SELECT sub.subject as subject, stud.name as name, max(grade) as max_grade 
+    FROM grades as g
+    JOIN subjects as sub on g.subject_id = sub.id
+    JOIN students as stud on g.subject_id = stud.id
+    group by subject, name
+    order by max_grade desc
+
+<p align="center">3</p>
+
+    SELECT gr.cluster, s.subject, avg(g.grade)
+    FROM grades as g
+    LEFT JOIN group_for_student as gfs on gfs.student_id = g.student_id
+    LEFT JOIN groups as gr on gfs.group_id = gr.id
+    LEFT JOIN subjects as s on s.id = g.subject_id
+    GROUP BY gr.cluster, s.subject
+    ORDER BY gr.cluster asc
+
+<p align="center">4</p>
+
+    SELECT t.name, s.subject
+    FROM grades g
+    LEFT JOIN teachers_for_sub as t_f_s on t_f_s.subject_id = g.subject_id
+    LEFT JOIN teachers as t on t.id = t_f_s.teacher_id
+    LEFT JOIN subjects as s on s.id = g.subject_id
+    GROUP BY t.name, s.subject
+    ORDER BY t.name
+
+<p align="center">5</p>
+
+    SELECT s.name, gr.cluster
+    FROM grades g
+    LEFT JOIN students as s on s.id = g.student_id
+    LEFT JOIN group_for_student as g_f_s on g_f_s.student_id = g.student_id
+    LEFT JOIN groups as gr on gr.id = g_f_s.group_id
+    GROUP BY s.name, gr.cluster
+    ORDER BY gr.cluster
+
+<p align="center">6</p>
+
+    SELECT s.name, gr.cluster, sub.subject, g.grade
+    FROM grades as g
+    LEFT JOIN students as s on s.id = g.student_id
+    LEFT JOIN group_for_student as g_f_s on g_f_s.student_id = g.student_id
+    LEFT JOIN groups as gr on gr.id = g_f_s.group_id
+    LEFT JOIN subjects as sub on sub.id = g.subject_id
+    GROUP BY g.grade, s.name, gr.cluster, sub.subject
+    ORDER BY s.name, gr.cluster, sub.subject
+
+<p align="center">7</p>
+
+    SELECT s.name, gr.cluster, sub.subject, g.grade, max(date_grade) as date_grade
+    FROM grades as g
+    LEFT JOIN subjects as sub on sub.id = g.subject_id
+    LEFT JOIN students as s on s.id = g.student_id
+    LEFT JOIN group_for_student as g_f_s on g_f_s.student_id = g.student_id
+    LEFT JOIN groups as gr on gr.id = g_f_s.group_id
+    WHERE g.subject_id = 5
+    GROUP BY s.name, gr.cluster, g.grade, sub.subject
+    ORDER BY gr.cluster
+
+<p align="center">8</p>
+
+    SELECT s.name, sub.subject
+    FROM grades as g 
+    LEFT JOIN students as s on s.id = g.student_id
+    LEFT JOIN subjects as sub on sub.id = g.subject_id
+    GROUP BY s.name, sub.subject
+    ORDER BY s.name
+
+<p align="center">9</p>
+
+    SELECT t.name, s.subject, round(avg(g.grade), 2) as avg_grade
+    FROM grades g
+    LEFT JOIN teachers_for_sub as t_f_s on t_f_s.subject_id = g.subject_id
+    LEFT JOIN teachers as t on t.id = t_f_s.teacher_id
+    LEFT JOIN subjects as s on s.id = g.subject_id
+    GROUP BY t.name, s.subject
+    ORDER BY round(avg(g.grade), 2) desc
+
+<p align="center">10</p>
+
+    SELECT t.name, round(avg(g.grade), 2)
+    FROM grades g
+    LEFT JOIN teachers_for_sub as t_f_s on t_f_s.subject_id = g.subject_id
+    LEFT JOIN teachers as t on t.id = t_f_s.teacher_id
+    GROUP BY t.name
+    ORDER BY round(avg(g.grade), 2) desc
 
 ### Author
-[![GitHub Contributors Image](https://contrib.rocks/image?repo=LeadShadow/hw6web)](https://github.com/LeadShadow)
+[![GitHub Contributors Image](https://contrib.rocks/image?repo=LeadShadow/hw8web)](https://github.com/LeadShadow)
 
 ---
 ### License
 
-[![GitHub](https://img.shields.io/github/license/LeadShadow/hw7web)](https://github.com/LeadShadow/hw7web/blob/main/LICENSE)
+[![GitHub](https://img.shields.io/github/license/LeadShadow/hw8web)](https://github.com/LeadShadow/hw8web/blob/main/LICENSE)
